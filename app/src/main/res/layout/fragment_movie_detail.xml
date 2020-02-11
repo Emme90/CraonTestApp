@@ -3,19 +3,97 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="movie"
+            type="com.example.craontestapp.model.Movie" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.MovieDetailFragment">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/movieDetailImageView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:minHeight="200dp"
+            android:imageUrl="@{movie.imageUrl}"
+            android:src="@mipmap/ic_app_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movieDetailImageView">
+
+            <TextView
+                android:id="@+id/movieDetailDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{movie.duration}"
+                tools:text="150 min" />
+
+            <TextView
+                android:id="@+id/movieDetailReleaseDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="@{movie.releaseDate}"
+                tools:text="2020-05-01" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/movieDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="@{movie.title}"
+            tools:text="Titolo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <TextView
+            android:id="@+id/movieDetailPlot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:text="@{movie.plot}"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/movieDetailTitle"
+            tools:text="Descrizione" />
+
+
+        <TextView
+            android:id="@+id/movieDetailSlogan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="14sp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:text="@{movie.slogan}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movieDetailPlot"
+            tools:text="Slogan" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
