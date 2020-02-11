@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.RegisterFragment">
+
+    <EditText
+        android:id="@+id/registrationEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:hint="Inserisci la tua email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/registrationPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:hint="Inserisci la tua password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registrationEmail" />
+
+    <EditText
+        android:id="@+id/registrationConfPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:hint="Conferma la tua password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registrationPassword" />
+
+    <ru.katso.livebutton.LiveButton
+        android:id="@+id/confRegistrationButton"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="REGISTRATI"
+        app:corners="8dp"
+        app:normalHeight="10dp"
+        app:pressedHeight="2dp"
+        app:backgroundColor="#E4E4E4"
+        app:shadowColor="#838383"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        app:layout_constraintBottom_toTopOf="@+id/registrationEmail"
+        app:layout_constraintStart_toStartOf="@+id/registrationEmail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        app:layout_constraintBottom_toTopOf="@+id/registrationPassword"
+        app:layout_constraintStart_toStartOf="@+id/registrationPassword" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Conferma password"
+        app:layout_constraintBottom_toTopOf="@+id/registrationConfPassword"
+        app:layout_constraintStart_toStartOf="@+id/registrationConfPassword" />
+
+    <ImageView
+        android:id="@+id/cancelRegisterEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cancel_text"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/registrationEmail"
+        app:layout_constraintEnd_toEndOf="@+id/registrationEmail"
+        app:layout_constraintTop_toTopOf="@+id/registrationEmail" />
+
+    <ImageView
+        android:id="@+id/showRegisterPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_show_password"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/registrationPassword"
+        app:layout_constraintEnd_toEndOf="@+id/registrationPassword"
+        app:layout_constraintTop_toTopOf="@+id/registrationPassword" />
+
+    <ImageView
+        android:id="@+id/showConfRegisterPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_show_password"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/registrationConfPassword"
+        app:layout_constraintEnd_toEndOf="@+id/registrationConfPassword"
+        app:layout_constraintTop_toTopOf="@+id/registrationConfPassword" />
+
+    <CheckBox
+        android:id="@+id/registrationCheckBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Accetto i Termini e Condizioni del servizio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registrationConfPassword" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
