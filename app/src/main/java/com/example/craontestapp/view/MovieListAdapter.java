@@ -3,9 +3,12 @@ package com.example.craontestapp.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.craontestapp.R;
@@ -15,7 +18,7 @@ import com.example.craontestapp.model.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
+public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> implements View.OnClickListener {
 
     private ArrayList<Movie> movieList;
 
@@ -40,12 +43,27 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         holder.itemView.setMovie(movieList.get(position));
+
+        holder.itemView.movieItemRelativeLayout.setOnClickListener(this);
     }
 
     @Override
     public int getItemCount() {
         return movieList.size();
     }
+
+    @Override
+    public void onClick(View v) {
+        String movieId = ((TextView)v.findViewById(R.id.movieListId)).getText().toString();
+        int mId = Integer.valueOf(movieId);
+
+        NavDirections action = MovieListFragmentDirections.actionMovieDetail();
+        ((MovieListFragmentDirections.ActionMovieDetail)action).setMovieId(mId);
+
+        Navigation.findNavController(v).navigate(action);
+
+    }
+
 
     class MovieViewHolder extends RecyclerView.ViewHolder{
 

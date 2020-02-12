@@ -20,5 +20,10 @@
         android:id="@+id/movieDetailFragment"
         android:name="com.example.craontestapp.view.MovieDetailFragment"
         android:label="fragment_movie_detail"
-        tools:layout="@layout/fragment_movie_detail" />
+        tools:layout="@layout/fragment_movie_detail" >
+        <argument
+            android:name="movieId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

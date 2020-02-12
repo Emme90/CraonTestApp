@@ -1,7 +1,11 @@
 package com.example.craontestapp.model;
 
+import android.view.View;
+
+import com.example.craontestapp.util.Util;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class Movie {
@@ -14,7 +18,7 @@ public class Movie {
     @SerializedName("release_date")
     public String releaseDate;
     @SerializedName("runtime")
-    public String duration;
+    public int duration;
     @SerializedName("genres")
     public List<Genre> genre;
     @SerializedName("genre_ids")
@@ -29,7 +33,9 @@ public class Movie {
     @SerializedName("poster_path")  // may be null!
     public String imageUrl;
 
-    public Movie(int movieId, String imdbId, String title, String releaseDate, String duration, List<Genre> genre, String website, String plot, String slogan, List<Language> languages, String imageUrl) {
+    public boolean websiteExist = false;
+
+    public Movie(int movieId, String imdbId, String title, String releaseDate, int duration, List<Genre> genre, String website, String plot, String slogan, List<Language> languages, String imageUrl) {
         this.movieId = movieId;
         this.imdbId = imdbId;
         this.title = title;
@@ -41,5 +47,25 @@ public class Movie {
         this.slogan = slogan;
         this.languages = languages;
         this.imageUrl = imageUrl;
+    }
+
+    public String getFormattedDuration(){
+        String formattedDuration = Util.convertTimeToDuration(duration);
+        return formattedDuration;
+    }
+
+    public String getFormattedDate(){
+        String formattedDate = Util.formattingDate(releaseDate);
+        return formattedDate;
+    }
+
+    public String getExistingWebsite(){
+        if (website.equals("")){
+            websiteExist = false;
+            return website;
+        } else {
+            websiteExist = true;
+            return website;
+        }
     }
 }
