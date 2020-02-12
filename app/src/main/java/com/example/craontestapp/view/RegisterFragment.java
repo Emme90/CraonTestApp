@@ -18,8 +18,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.craontestapp.R;
+import com.example.craontestapp.model.User;
 import com.example.craontestapp.util.TextUtil;
 import com.example.craontestapp.util.Validator;
 import com.example.craontestapp.viewmodel.RegisterViewModel;
@@ -69,6 +71,7 @@ public class RegisterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         registerViewModel = ViewModelProviders.of(this).get(RegisterViewModel.class);
+
     }
 
     @Override
@@ -134,15 +137,21 @@ public class RegisterFragment extends Fragment {
 
         // validazione campi e registrazione nuovo utente
         registrationButton.setOnClickListener(v -> {
-            if (validator.validateEmail(email)){
-                if (validator.validatePassword(psw)){
-                    if (validator.matchPsw(psw, confPsw)){
-                        if (checkBox.isChecked()){
-                            // registrazione nuovo utente
-
-                            // proseguo verso login activity
-                            NavDirections action = RegisterFragmentDirections.actionRegistrationComplete();
-                            Navigation.findNavController(v).navigate(action);
+            if (validator.validateEmail(email)) {
+                if (validator.validatePassword(psw)) {
+                    if (validator.matchPsw(psw, confPsw)) {
+                        if (checkBox.isChecked()) {
+                            // controllo utente già esistente
+                            if (registerViewModel.checkExistingUser(email.getText().toString())){
+                                // registrazione nuovo utente
+                                User u = new User(email.getText().toString(), psw.getText().toString());
+                                registerViewModel.insertUser(u);
+                                // proseguo verso login activity
+                                NavDirections action = RegisterFragmentDirections.actionRegistrationComplete();
+                                Navigation.findNavController(v).navigate(action);
+                            } else {
+                                Toast.makeText(v.getContext(), "Diahane!", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             checkBox.setError("Devi accettare i Termini e Condizioni del servizio");
                         }

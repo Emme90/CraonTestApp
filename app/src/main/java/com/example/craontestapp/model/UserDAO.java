@@ -13,8 +13,11 @@ public interface UserDAO {
     @Query("select * from users")
     List<User> getAllUser();
 
-    @Query("select + from users where id=:id")
+    @Query("select * from users where id=:id")
     User getUserById(int id);
+
+    @Query("select * from users where email=:email")
+    User getUserByEmail(String email);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertUser(User user);

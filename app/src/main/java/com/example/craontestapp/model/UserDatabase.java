@@ -11,17 +11,14 @@ public abstract class UserDatabase extends RoomDatabase {
 
     private static UserDatabase instance;
 
-    private UserDatabase() {
-    }
-
     public static UserDatabase getInstance(Context context) {
         if (instance == null) {
             synchronized (UserDatabase.class) {
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                            context,
+                            context.getApplicationContext(),
                             UserDatabase.class,
-                            "userDatabase")
+                            "testdatabase")
                             .build();
                 }
             }
