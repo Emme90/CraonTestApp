@@ -15,15 +15,31 @@ import java.util.List;
 public class RegisterViewModel extends AndroidViewModel {
 
     private InsertUserTask insertTask;
-    private CheckExistingUserTask checkTask;
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void checkExistingUser(String email, Task task) {
-        checkTask = new CheckExistingUserTask();
-        checkTask.execute(email, task);
+    public boolean registerUser(String email, String psw) {
+        List<User> userList = UserDatabase.getInstance(getApplication()).userDAO().getAllUser();
+        if (userList.size() == 0) {
+            // registrazione nuovo utente
+            User u = new User(email, psw);
+            insertUser(u);
+            // proseguo verso login activity
+            return true;
+        } else {
+            for (User u : userList) {
+                if (u.email.equals(email)) {
+                    return false;
+                }
+            }
+            // registrazione nuovo utente
+            User user = new User(email, psw);
+            insertUser(user);
+            // proseguo verso login activity
+            return true;
+        }
     }
 
     public void insertUser(User user) {
@@ -32,41 +48,6 @@ public class RegisterViewModel extends AndroidViewModel {
 
     }
 
-    public interface Task {
-        void execute(boolean b);
-    }
-
-    // check for existing user
-    private class CheckExistingUserTask extends AsyncTask<Object, Void, Boolean> {
-
-        private Task task;
-
-        @Override
-        protected Boolean doInBackground(Object... strings) {
-            List<User> existingUsers;
-            UserDAO userDAO = UserDatabase.getInstance(getApplication()).userDAO();
-            existingUsers = userDAO.getAllUser();
-            String userEmail = (String) strings[0];
-            task = (Task) strings[1];
-            if (existingUsers.size() == 0) {
-                return true;
-            } else {
-                for (User u : existingUsers) {
-                    if (u.email.equals(userEmail)) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            task.execute(aBoolean);
-        }
-    }
 
     // saving new user
     private class InsertUserTask extends AsyncTask<User, Void, User> {
