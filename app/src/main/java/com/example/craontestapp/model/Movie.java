@@ -1,11 +1,8 @@
 package com.example.craontestapp.model;
 
-import android.view.View;
-
 import com.example.craontestapp.util.Util;
 import com.google.gson.annotations.SerializedName;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class Movie {
@@ -60,7 +57,7 @@ public class Movie {
     }
 
     public String getExistingWebsite(){
-        if (website.equals("")){
+        if (website == null || website.equals("")){
             websiteExist = false;
             return website;
         } else {

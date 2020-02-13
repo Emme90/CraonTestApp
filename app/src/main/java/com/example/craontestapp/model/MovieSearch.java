@@ -8,9 +8,9 @@ public class MovieSearch {
 
     @SerializedName("page")
     public int page;
-    @SerializedName("total_result")
+    @SerializedName("total_results")
     public int totalResult;
-    @SerializedName("total_page")
+    @SerializedName("total_pages")
     public int totalPage;
     @SerializedName("results")
     public List<Movie> result;

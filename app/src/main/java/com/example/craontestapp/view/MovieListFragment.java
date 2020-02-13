@@ -59,7 +59,7 @@ public class MovieListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = ViewModelProviders.of(this).get(ListViewModel.class);
-        viewModel.fetchData();
+//        viewModel.fetchData();
 
         movieList.setLayoutManager(new LinearLayoutManager(getContext()));
         movieList.setAdapter(mAdapter);
@@ -71,6 +71,9 @@ public class MovieListFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
 //                viewModel.fetchNextData(2);
+                if (lastItem == viewModel.movies.getValue().size() - 1) {
+                    viewModel.fetchData();
+                }
             }
         });
 
