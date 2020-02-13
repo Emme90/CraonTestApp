@@ -56,9 +56,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     public void onClick(View v) {
         String movieId = ((TextView)v.findViewById(R.id.movieListId)).getText().toString();
         int mId = Integer.valueOf(movieId);
+        String movieTitle = ((TextView)v.findViewById(R.id.movieTitle)).getText().toString();
 
         NavDirections action = MovieListFragmentDirections.actionMovieDetail();
         ((MovieListFragmentDirections.ActionMovieDetail)action).setMovieId(mId);
+        ((MovieListFragmentDirections.ActionMovieDetail)action).setMovieTitle(movieTitle);
 
         Navigation.findNavController(v).navigate(action);
 

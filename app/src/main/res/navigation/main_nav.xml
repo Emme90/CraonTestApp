@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/movieListFragment"
         android:name="com.example.craontestapp.view.MovieListFragment"
-        android:label="fragment_movie_list"
+        android:label="Film popolari"
         tools:layout="@layout/fragment_movie_list" >
         <action
             android:id="@+id/actionMovieDetail"
@@ -19,11 +19,15 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.example.craontestapp.view.MovieDetailFragment"
-        android:label="fragment_movie_detail"
+        android:label="{movieTitle}"
         tools:layout="@layout/fragment_movie_detail" >
         <argument
             android:name="movieId"
             app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="movieTitle"
+            app:argType="string"
+            android:defaultValue="Untitled" />
     </fragment>
 </navigation>

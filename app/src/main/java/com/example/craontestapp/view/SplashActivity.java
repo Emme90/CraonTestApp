@@ -3,7 +3,9 @@ package com.example.craontestapp.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ProgressBar;
 
@@ -17,8 +19,8 @@ import butterknife.ButterKnife;
 public class SplashActivity extends AppCompatActivity {
 
     private static final String SPLASH_ACTIVITY_LOG = SplashActivity.class.getSimpleName();
+    private Handler handler = new Handler();
     private SplashViewModel splashViewModel;
-    private EntryActivity entryActivity = new EntryActivity();
 
     @BindView(R.id.splashProgressBar)
     ProgressBar progressBar;
@@ -37,8 +39,15 @@ public class SplashActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        Runnable runnable = () -> {
+            Intent intent = new Intent(SplashActivity.this, EntryActivity.class);
+            startActivity(intent);
+            finish();
+
+        };
+        handler.postDelayed(runnable, 3000);
         // TODO: avoid to instantiate each time a new a activity
-        splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
-        splashViewModel.skipToMainActivity(this, entryActivity);
+//        splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+//        splashViewModel.skipToMainActivity(this, entryActivity);
     }
 }

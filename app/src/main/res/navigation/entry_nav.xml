@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.craontestapp.view.LoginFragment"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/actionToRegistration"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.craontestapp.view.RegisterFragment"
-        android:label="fragment_register"
+        android:label="Registrazione"
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/actionRegistrationComplete"
