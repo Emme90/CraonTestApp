@@ -57,7 +57,30 @@ public class ListViewModel extends AndroidViewModel {
         );
     }
 
-    private void movieRetrieve(List<Movie> movieList){
+//    public void fetchNextData(int page) {
+//        int currentPage = 0;
+//        disposable.add(
+//                movieApiService.getNextPopularMovie(page)
+//                        .subscribeOn(Schedulers.newThread())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribeWith(new DisposableSingleObserver<MovieSearch>() {
+//                            @Override
+//                            public void onSuccess(MovieSearch movieSearch) {
+////                                currentPage = movieSearch.page;
+////                                currentPage++;
+//                                movieRetrieve(movieSearch.result);
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//
+//                            }
+//                        })
+//        );
+//        //return currentPage;
+//    }
+
+    private void movieRetrieve(List<Movie> movieList) {
         movies.setValue(movieList);
         movieLoadError.setValue(false);
         loading.setValue(false);

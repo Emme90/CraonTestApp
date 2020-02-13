@@ -9,6 +9,9 @@ public interface MovieApi {
     @GET("movie/popular?" + MovieApiService.API_KEY)
     Single<MovieSearch> getPopularMovies();
 
+    @GET("movie/popular?page={page}" + MovieApiService.API_KEY)
+    Single<MovieSearch> getNextPopularMovie(@Path("page") int page);
+
     @GET("movie/{id}?"+ MovieApiService.API_KEY)
     Single<Movie> getMovieById(@Path("id") int id);
 

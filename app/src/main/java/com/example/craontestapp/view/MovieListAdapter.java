@@ -43,7 +43,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         holder.itemView.setMovie(movieList.get(position));
-
         holder.itemView.movieItemRelativeLayout.setOnClickListener(this);
     }
 

@@ -41,4 +41,8 @@ public class MovieApiService {
     public Single<GenreSearch> getAllGenres(){
         return movieApi.getMovieGenres();
     }
+
+    public Single<MovieSearch> getNextPopularMovie(int currentPage){
+        return movieApi.getNextPopularMovie(currentPage);
+    }
 }
