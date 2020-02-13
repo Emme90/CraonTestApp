@@ -45,9 +45,7 @@ public class RegisterViewModel extends AndroidViewModel {
     public void insertUser(User user) {
         insertTask = new InsertUserTask();
         insertTask.execute(user);
-
     }
-
 
     // saving new user
     private class InsertUserTask extends AsyncTask<User, Void, User> {

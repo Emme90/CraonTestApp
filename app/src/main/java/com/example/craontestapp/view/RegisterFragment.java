@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ import ru.katso.livebutton.LiveButton;
 
 public class RegisterFragment extends Fragment {
 
+    private static final String TAG = RegisterFragment.class.getSimpleName();
     private final LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(this);
 
     private RegisterViewModel registerViewModel;
@@ -167,6 +169,9 @@ public class RegisterFragment extends Fragment {
                                                 }
                                             },
                                             (Throwable throwable) -> {
+                                                if (throwable != null) {
+                                                    Log.e(TAG, throwable.getMessage());
+                                                }
                                             });
                         } else {
                             checkBox.setError("Devi accettare i Termini e Condizioni del servizio");
