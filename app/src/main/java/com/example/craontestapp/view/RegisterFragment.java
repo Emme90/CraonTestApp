@@ -142,16 +142,19 @@ public class RegisterFragment extends Fragment {
                     if (validator.matchPsw(psw, confPsw)) {
                         if (checkBox.isChecked()) {
                             // controllo utente già esistente
-                            if (registerViewModel.checkExistingUser(email.getText().toString())){
-                                // registrazione nuovo utente
-                                User u = new User(email.getText().toString(), psw.getText().toString());
-                                registerViewModel.insertUser(u);
-                                // proseguo verso login activity
-                                NavDirections action = RegisterFragmentDirections.actionRegistrationComplete();
-                                Navigation.findNavController(v).navigate(action);
-                            } else {
-                                Toast.makeText(v.getContext(), "Diahane!", Toast.LENGTH_SHORT).show();
-                            }
+                            registerViewModel.checkExistingUser(email.getText().toString(), (b -> {
+                                if (b){
+                                    // registrazione nuovo utente
+                                    User u = new User(email.getText().toString(), psw.getText().toString());
+                                    registerViewModel.insertUser(u);
+                                    // proseguo verso login activity
+                                    NavDirections action = RegisterFragmentDirections.actionRegistrationComplete();
+                                    Navigation.findNavController(v).navigate(action);
+                                } else {
+                                    Toast.makeText(v.getContext(), "Utente già registrato!", Toast.LENGTH_SHORT).show();
+                                }
+                            }));
+
                         } else {
                             checkBox.setError("Devi accettare i Termini e Condizioni del servizio");
                         }
