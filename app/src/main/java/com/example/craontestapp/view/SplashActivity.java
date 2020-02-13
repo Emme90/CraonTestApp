@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 
 import com.example.craontestapp.R;
 import com.example.craontestapp.viewmodel.SplashViewModel;
+import com.facebook.stetho.Stetho;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +29,8 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         Log.i(SPLASH_ACTIVITY_LOG, "Entrato nella splash");
+
+        Stetho.initializeWithDefaults(this);
     }
 
     @Override

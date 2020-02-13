@@ -1,34 +1,45 @@
 package com.example.craontestapp.view;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.example.craontestapp.R;
 import com.example.craontestapp.util.TextUtil;
 import com.example.craontestapp.util.Validator;
 import com.example.craontestapp.viewmodel.RegisterViewModel;
+import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
+import com.trello.rxlifecycle3.LifecycleProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ru.katso.livebutton.LiveButton;
 
 public class RegisterFragment extends Fragment {
+
+    private static final String TAG = RegisterFragment.class.getSimpleName();
+    private final LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(this);
 
     private RegisterViewModel registerViewModel;
     private TextUtil textUtil = new TextUtil();
@@ -69,8 +80,10 @@ public class RegisterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         registerViewModel = ViewModelProviders.of(this).get(RegisterViewModel.class);
+
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onStart() {
         super.onStart();
@@ -134,15 +147,32 @@ public class RegisterFragment extends Fragment {
 
         // validazione campi e registrazione nuovo utente
         registrationButton.setOnClickListener(v -> {
-            if (validator.validateEmail(email)){
-                if (validator.validatePassword(psw)){
-                    if (validator.matchPsw(psw, confPsw)){
-                        if (checkBox.isChecked()){
-                            // registrazione nuovo utente
-
-                            // proseguo verso login activity
-                            NavDirections action = RegisterFragmentDirections.actionRegistrationComplete();
-                            Navigation.findNavController(v).navigate(action);
+            if (validator.validateEmail(email)) {
+                if (validator.validatePassword(psw)) {
+                    if (validator.matchPsw(psw, confPsw)) {
+                        if (checkBox.isChecked()) {
+                            // controllo utente già esistente
+                            Single.fromCallable(() -> registerViewModel.registerUser(email.getText().toString(), psw.getText().toString()))
+                                    .subscribeOn(Schedulers.newThread())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .compose(provider.bindToLifecycle())
+                                    .subscribe(
+                                            (Boolean result) -> {
+                                                if (result != null) {
+                                                    if (result) {
+                                                        Toast.makeText(v.getContext(), "Utente registrato con successo!", Toast.LENGTH_SHORT).show();
+                                                        NavDirections action = RegisterFragmentDirections.actionRegistrationComplete();
+                                                        Navigation.findNavController(v).navigate(action);
+                                                    } else {
+                                                        Toast.makeText(v.getContext(), "Utente già registrato!", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            },
+                                            (Throwable throwable) -> {
+                                                if (throwable != null) {
+                                                    Log.e(TAG, throwable.getMessage());
+                                                }
+                                            });
                         } else {
                             checkBox.setError("Devi accettare i Termini e Condizioni del servizio");
                         }

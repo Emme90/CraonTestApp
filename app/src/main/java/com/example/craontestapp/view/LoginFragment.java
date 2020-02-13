@@ -1,34 +1,46 @@
 package com.example.craontestapp.view;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.craontestapp.R;
 import com.example.craontestapp.util.TextUtil;
 import com.example.craontestapp.util.Validator;
 import com.example.craontestapp.viewmodel.LoginViewModel;
+import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
+import com.trello.rxlifecycle3.LifecycleProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ru.katso.livebutton.LiveButton;
 
 public class LoginFragment extends Fragment {
+
+    private static final String TAG = LoginFragment.class.getSimpleName();
+    private final LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(this);
 
     private LoginViewModel viewModel;
     private TextUtil textUtil = new TextUtil();
@@ -48,7 +60,8 @@ public class LoginFragment extends Fragment {
     LiveButton loginButton;
 
 
-    public LoginFragment() {}
+    public LoginFragment() {
+    }
 
 
     @Override
@@ -72,6 +85,7 @@ public class LoginFragment extends Fragment {
 
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onStart() {
         super.onStart();
@@ -79,7 +93,8 @@ public class LoginFragment extends Fragment {
         // gestione campo email e icona per cancellare il testo inserito
         emailET.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -87,7 +102,8 @@ public class LoginFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
         cancelEmail.setOnClickListener(v -> {
             textUtil.cancelEmailBehaviour(cancelEmail, emailET);
@@ -96,7 +112,8 @@ public class LoginFragment extends Fragment {
         // gestione campo password e icona per rendere visibile la password
         passwordET.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -104,7 +121,8 @@ public class LoginFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
         showPassword.setOnClickListener(v -> {
             textUtil.showPasswordBehaviour(showPassword, passwordET);
@@ -113,16 +131,30 @@ public class LoginFragment extends Fragment {
         // validazione login e controllo esistenza tente su database
         loginButton.setOnClickListener(v -> {
 
-            if (validator.validateEmail(emailET)){
+            if (validator.validateEmail(emailET)) {
                 // TODO: flusso login
                 // controllo utente esistente
-
-                // salvataggio utenza nelle shared preference
-
-                // proseguo verso la main activity
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                getActivity().startActivity(intent);
-                getActivity().finish();
+                Single.fromCallable(() -> viewModel.loginUser(emailET.getText().toString(), passwordET.getText().toString()))
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .compose(provider.bindToLifecycle())
+                        .subscribe(
+                                (Boolean result) -> {
+                                    if (result != null) {
+                                        if (result) {
+                                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                                            getActivity().startActivity(intent);
+                                            getActivity().finish();
+                                        } else {
+                                            Toast.makeText(v.getContext(), "Email o password non corretti", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                },
+                                (Throwable throwable) -> {
+                                    if (throwable != null) {
+                                        Log.e(TAG, throwable.getMessage());
+                                    }
+                                });
             }
         });
 
