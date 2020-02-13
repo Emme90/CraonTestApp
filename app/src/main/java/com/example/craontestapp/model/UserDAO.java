@@ -13,7 +13,7 @@ public interface UserDAO {
     @Query("select * from users")
     List<User> getAllUser();
 
-    @Query("select + from users where id=:id")
+    @Query("select * from users where id=:id")
     User getUserById(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
