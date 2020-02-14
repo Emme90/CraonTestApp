@@ -15,7 +15,7 @@ public class ImageUtil {
 
     private static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-    public static void loadImage(ImageView imageView, String url, CircularProgressDrawable progressDrawable){
+    public static void loadImage(ImageView imageView, String url, CircularProgressDrawable progressDrawable) {
         RequestOptions options = new RequestOptions()
                 .placeholder(progressDrawable)
                 .error(R.mipmap.ic_app_icon);
@@ -27,7 +27,7 @@ public class ImageUtil {
                 .into(imageView);
     }
 
-    public static CircularProgressDrawable getProgressDrawable(Context context){
+    public static CircularProgressDrawable getProgressDrawable(Context context) {
         CircularProgressDrawable cpd = new CircularProgressDrawable(context);
         cpd.setStrokeWidth(10f);
         cpd.setCenterRadius(50f);
@@ -37,7 +37,7 @@ public class ImageUtil {
     }
 
     @BindingAdapter("android:imageUrl")
-    public static void loadImage(ImageView view, String url){
+    public static void loadImage(ImageView view, String url) {
         loadImage(view, url, getProgressDrawable(view.getContext()));
     }
 }

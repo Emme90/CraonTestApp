@@ -4,7 +4,6 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.craontestapp.model.Movie;
@@ -33,17 +32,41 @@ public class ListViewModel extends AndroidViewModel {
     public ListViewModel(@NonNull Application application) {
         super(application);
         fetchFromRemote(pageNumber);
-//        MediatorLiveData<Integer> mediator = new MediatorLiveData<>();
-//        mediator.addSource(pageNumber, this::fetchFromRemote);
+    }
+
+    public void refreshingData() {
+        fetchStartingList();
     }
 
     public void fetchData() {
         int page = pageNumber;
-        if (page < totalPageNumber){
+        if (page < totalPageNumber) {
             page++;
             pageNumber = page;
             fetchFromRemote(page);
         }
+    }
+
+    private void fetchStartingList() {
+        loading.setValue(true);
+        disposable.add(
+                movieApiService.getPopularMovies()
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<MovieSearch>() {
+                            @Override
+                            public void onSuccess(MovieSearch movieSearch) {
+                                movieRetrieve(movieSearch.result);
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                movieLoadError.setValue(true);
+                                loading.setValue(false);
+                                e.printStackTrace();
+                            }
+                        })
+        );
     }
 
     private void fetchFromRemote(int page) {
@@ -71,27 +94,6 @@ public class ListViewModel extends AndroidViewModel {
                         })
         );
     }
-//
-//    public void fetchNextData() {
-//        loading.setValue(true);
-//        disposable.add(
-//                movieApiService.getNextPopularMovie(pageNumber)
-//                        .subscribeOn(Schedulers.newThread())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribeWith(new DisposableSingleObserver<MovieSearch>() {
-//                            @Override
-//                            public void onSuccess(MovieSearch movieSearch) {
-//                                movieRetrieve(movieSearch.result);
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable e) {
-//
-//                            }
-//                        })
-//        );
-//        //return currentPage;
-//    }
 
     private void movieRetrieve(List<Movie> movieList) {
         movies.getValue().addAll(movieList);

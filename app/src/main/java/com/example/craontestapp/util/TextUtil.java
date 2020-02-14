@@ -10,8 +10,8 @@ public class TextUtil {
 
     private boolean isChecked = false;
 
-    public void showPasswordBehaviour(ImageView view, EditText editText){
-        if (isChecked){
+    public void showPasswordBehaviour(ImageView view, EditText editText) {
+        if (isChecked) {
             editText.setInputType(0x00000081);
             editText.setTypeface(Typeface.DEFAULT);
             isChecked = false;
@@ -24,7 +24,7 @@ public class TextUtil {
         }
     }
 
-    public void cancelEmailBehaviour(ImageView view, EditText editText){
+    public void cancelEmailBehaviour(ImageView view, EditText editText) {
         editText.getText().clear();
     }
 

@@ -27,7 +27,7 @@ public class DetailViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void fetchMovieById(int id){
+    public void fetchMovieById(int id) {
         movieDetailLoading.setValue(true);
         disposable.add(
                 movieApiService.getMovieById(id)

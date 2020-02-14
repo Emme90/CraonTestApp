@@ -1,14 +1,13 @@
 package com.example.craontestapp.view;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-
-import android.os.Bundle;
-import android.util.Log;
 
 import com.example.craontestapp.R;
 
@@ -30,6 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        return NavigationUI.navigateUp(mNavController, (DrawerLayout)null);
+        return NavigationUI.navigateUp(mNavController, (DrawerLayout) null);
     }
 }

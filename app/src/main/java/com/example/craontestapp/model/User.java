@@ -22,5 +22,6 @@ public class User {
     }
 
     @Ignore
-    public User() {}
+    public User() {
+    }
 }

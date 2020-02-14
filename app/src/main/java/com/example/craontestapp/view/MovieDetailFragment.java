@@ -2,16 +2,15 @@ package com.example.craontestapp.view;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.craontestapp.R;
 import com.example.craontestapp.databinding.FragmentMovieDetailBinding;
@@ -41,7 +40,7 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (getArguments() != null){
+        if (getArguments() != null) {
             movieId = MovieDetailFragmentArgs.fromBundle(getArguments()).getMovieId();
         }
 
@@ -53,24 +52,24 @@ public class MovieDetailFragment extends Fragment {
 
     private void observeViewModel() {
         viewModel.movieLiveData.observe(this.getViewLifecycleOwner(), movie -> {
-            if (movie != null && movie instanceof Movie){
+            if (movie != null && movie instanceof Movie) {
                 currentMovie = movie;
                 mBinding.setMovie(movie);
-                if (movie.imageUrl != null){
+                if (movie.imageUrl != null) {
                     // utilizzo di palette
                 }
             }
         });
         viewModel.movieDetailLoading.observe(this.getViewLifecycleOwner(), isLoading -> {
-            if (isLoading != null && isLoading instanceof Boolean){
+            if (isLoading != null && isLoading instanceof Boolean) {
                 mBinding.movieDetailProgressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-                if (isLoading){
+                if (isLoading) {
                     mBinding.movieDetailLoadError.setVisibility(View.GONE);
                 }
             }
         });
         viewModel.movieDetailError.observe(this.getViewLifecycleOwner(), isError -> {
-            if (isError != null && isError instanceof Boolean){
+            if (isError != null && isError instanceof Boolean) {
                 mBinding.movieDetailLoadError.setVisibility(isError ? View.VISIBLE : View.GONE);
             }
         });

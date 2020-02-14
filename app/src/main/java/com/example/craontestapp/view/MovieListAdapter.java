@@ -26,7 +26,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         this.movieList = movieList;
     }
 
-    public void updateMovieList(List<Movie> newList){
+    public void updateMovieList(List<Movie> newList) {
         movieList.clear();
         movieList.addAll(newList);
         notifyDataSetChanged();
@@ -53,20 +53,20 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public void onClick(View v) {
-        String movieId = ((TextView)v.findViewById(R.id.movieListId)).getText().toString();
+        String movieId = ((TextView) v.findViewById(R.id.movieListId)).getText().toString();
         int mId = Integer.valueOf(movieId);
-        String movieTitle = ((TextView)v.findViewById(R.id.movieTitle)).getText().toString();
+        String movieTitle = ((TextView) v.findViewById(R.id.movieTitle)).getText().toString();
 
         NavDirections action = MovieListFragmentDirections.actionMovieDetail();
-        ((MovieListFragmentDirections.ActionMovieDetail)action).setMovieId(mId);
-        ((MovieListFragmentDirections.ActionMovieDetail)action).setMovieTitle(movieTitle);
+        ((MovieListFragmentDirections.ActionMovieDetail) action).setMovieId(mId);
+        ((MovieListFragmentDirections.ActionMovieDetail) action).setMovieTitle(movieTitle);
 
         Navigation.findNavController(v).navigate(action);
 
     }
 
 
-    class MovieViewHolder extends RecyclerView.ViewHolder{
+    class MovieViewHolder extends RecyclerView.ViewHolder {
 
         public MovieListItemBinding itemView;
 

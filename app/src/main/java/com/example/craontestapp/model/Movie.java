@@ -46,23 +46,35 @@ public class Movie {
         this.imageUrl = imageUrl;
     }
 
-    public String getFormattedDuration(){
+    public String getFormattedDuration() {
         String formattedDuration = Util.convertTimeToDuration(duration);
         return formattedDuration;
     }
 
-    public String getFormattedDate(){
+    public String getFormattedDate() {
         String formattedDate = Util.formattingDate(releaseDate);
         return formattedDate;
     }
 
-    public String getExistingWebsite(){
-        if (website == null || website.equals("")){
+    public String getExistingWebsite() {
+        if (website == null || website.equals("")) {
             websiteExist = false;
             return website;
         } else {
             websiteExist = true;
             return website;
         }
+    }
+
+    public String getGenres() {
+        String genres = "";
+        for (int i = 0; i < genre.size(); i++) {
+            if (i == genre.size() - 1) {
+                genres = genres + genre.get(i).type;
+            } else {
+                genres = genres + genre.get(i).type + " | ";
+            }
+        }
+        return genres;
     }
 }

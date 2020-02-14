@@ -1,13 +1,12 @@
 package com.example.craontestapp.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.craontestapp.R;
 import com.example.craontestapp.viewmodel.SplashViewModel;
@@ -46,8 +45,5 @@ public class SplashActivity extends AppCompatActivity {
 
         };
         handler.postDelayed(runnable, 3000);
-        // TODO: avoid to instantiate each time a new a activity
-//        splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
-//        splashViewModel.skipToMainActivity(this, entryActivity);
     }
 }

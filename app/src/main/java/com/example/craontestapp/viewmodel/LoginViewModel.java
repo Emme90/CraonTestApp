@@ -14,10 +14,10 @@ public class LoginViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public boolean loginUser(String email, String psw){
+    public boolean loginUser(String email, String psw) {
         User user = UserDatabase.getInstance(getApplication()).userDAO().getUserByEmail(email);
-        if (user != null){
-            if (user.password.equals(psw)){
+        if (user != null) {
+            if (user.password.equals(psw)) {
                 return true;
             } else {
                 return false;

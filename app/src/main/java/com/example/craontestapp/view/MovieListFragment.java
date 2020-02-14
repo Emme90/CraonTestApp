@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.craontestapp.R;
-import com.example.craontestapp.model.Movie;
 import com.example.craontestapp.viewmodel.ListViewModel;
 
 import java.util.ArrayList;
@@ -59,7 +58,6 @@ public class MovieListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = ViewModelProviders.of(this).get(ListViewModel.class);
-//        viewModel.fetchData();
 
         movieList.setLayoutManager(new LinearLayoutManager(getContext()));
         movieList.setAdapter(mAdapter);
@@ -70,11 +68,15 @@ public class MovieListFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
-//                viewModel.fetchNextData(2);
                 if (lastItem == viewModel.movies.getValue().size() - 1) {
                     viewModel.fetchData();
                 }
             }
+        });
+
+        refreshLayout.setOnRefreshListener(() -> {
+            viewModel.refreshingData();
+            refreshLayout.setRefreshing(false);
         });
 
         observeViewModel();

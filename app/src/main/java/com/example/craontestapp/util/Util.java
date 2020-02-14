@@ -1,7 +1,5 @@
 package com.example.craontestapp.util;
 
-import android.view.View;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
