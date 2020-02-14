@@ -13,7 +13,7 @@ import com.example.craontestapp.R;
 
 public class ImageUtil {
 
-    private static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+    public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
     public static void loadImage(ImageView imageView, String url, CircularProgressDrawable progressDrawable) {
         RequestOptions options = new RequestOptions()

@@ -8,17 +8,23 @@
         <variable
             name="movie"
             type="com.example.craontestapp.model.Movie" />
+        <variable
+            name="palette"
+            type="com.example.craontestapp.model.MoviePalette" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/movieDetailConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@{palette.color}"
         tools:context=".view.MovieDetailFragment">
 
         <ImageView
             android:id="@+id/movieDetailImageView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:minHeight="200dp"
             android:imageUrl="@{movie.imageUrl}"
             android:src="@mipmap/ic_app_icon"
